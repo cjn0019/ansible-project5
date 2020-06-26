@@ -1,5 +1,6 @@
 ---
 all:
   hosts:
-    ec2-52-53-247-20.us-west-1.compute.amazonaws.com:
-      ansible_user: ec2-user
+    localhost:
+      ansible_connection: local
+      ansible_python_interpreter: /usr/bin/python3
