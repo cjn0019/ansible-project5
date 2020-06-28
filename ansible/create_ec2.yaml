@@ -1,23 +1,24 @@
 ---
 - hosts: localhost
-  gather_facts: 
+#  interpreter_python: /usr/bin/python3
+  gather_facts: no
   vars:
     ami_id: "ami-04e59c05167ea7bd5"
   module_defaults: 
-      group/aws:
-        region: "us-west-1"
+    group/aws:
+      region: "us-west-1"
   tasks:
-    - name: Provision Christians ECE2 Instance
-      ec2: 
-        key_name: ansible
-        group: Module5-developer-sg
-        instance_type: t3.nano
-        image: "{{ ami_id }}"
-        instance_tags:
-          Name: Module5
-        wait: yes
-        vpc_subnet_id: "{{ public1_subnet.subnet.id }}"
-        exact_count: 1
-        count_tag:
-          Name: Module5 Christian
+  - name: Provision Christians ECE2 Instance
+    ec2: 
+      key_name: ansible
+      group: mod5-default
+      instance_type: t3.nano
+      image: "{{ ami_id }}"
+      instance_tags:
+        Name: Module5
+      wait: yes
+      vpc_subnet_id: "{{ public1_subnet.subnet.id }}"
+      exact_count: 1
+      count_tag:
+        Name: Module5 Christian
         

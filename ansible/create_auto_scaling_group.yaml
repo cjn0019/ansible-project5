@@ -1,0 +1,27 @@
+---
+  - hosts: localhost
+    gather_facts: no
+    module_defaults:
+      group/aws:
+        region: "us-west-1"
+
+    tasks:
+      - name: Create Module 5 auto-scaling group
+        ec2_asg:
+          name: mod5_auto_scale_group
+          launch_template:
+            launch_template_name: project4-lt
+          desired_capacity: "2"
+          min_size: "2"
+          max_size: "4"
+          availability_zones: ["us-west-1a", "us-west-1c"]
+          vpc_zone_identifier: ["{{ public1_subnet.subnet.id}}", "{{ public2_subnet.subnet.id}}"]
+          target_group_arns: ["arn:aws:elasticloadbalancing:us-west-1:129086389099:targetgroup/project4-tg/08dc90d673f00dea"]
+      - name: Allocate elastic IP1
+        ec2_eip: 
+          name: mod5_elastic_ips
+        register: ip1
+      - name: Allocate elastic IP2
+        ec2_eip:
+          name: mod5_elastic_ips
+        register: ip2
